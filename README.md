@@ -22,4 +22,8 @@ insight and plan ahead.
 
 #### Weather
 
+- [OpenMeteo](https://open-meteo.com/en)
+
 #### Attractions
+
+- [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
