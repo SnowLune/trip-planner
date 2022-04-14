@@ -1,7 +1,105 @@
-<!doctype html>
-<html>
-   <head>
-   </head>
-   <body>
-   </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1 class="page_title">Trip Planner</h1>
+        </div>
+    </header>
+
+    <min class="page_content">
+        <section class="weather_report_container">
+            <div class="report_list_container  report_container">
+
+                <!-- Beginning of the section that holds the search bar -->
+                <div class="column" id="search_bar_container">
+                    <form class="search_location" action="action_page.php">
+                        <input type="text" placeholder="Search Location" name="search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                      </form>
+                <!-- Beginning of the section that holds the search history -->   
+
+                <div class="search_history">
+                    <ul class="city_searched" id="searched_location">
+                        <li class="searched_location_list"></li>
+                    </ul>
+                </div>
+    
+                </div>
+
+                <!-- Beginning of the section that holds the weathe reports -->
+                <div class="column report_container" id="general_report_container">
+
+                    <div class="flex-container report_container">
+
+                        <!-- This is the section that holds the daily weather report. -->
+                        <div class="report_container" id="today_weather_report_container">
+                            <div id="today_weather_report_box">
+                                <div class="date"> Trip destination info goes here</div>
+                                <P class="text">Flight destination: St Paul MN</P>
+                                <P>Date: 04-11-2022</P>
+                            </div>
+                        </div>
+                        <!-- This is the section that holds the weekly weather report. -->
+                        <div class="report_container" id="weekly_report_container">
+                            <h2>6 Day Weather forcast goes here</h2>
+                            <div class="weekly_list_container report_container">
+
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                                <div class="report_container_box">
+                                    <div class="date"> 03/14/202 </div>
+                                    <P class="text">Tempeture: 57 °F</P>
+                                    <P>Humidity: 62 %</P>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </section>
+        </main>
+
+        <footer></footer>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
+            </script>
+
+</body>
+
 </html>

@@ -1,0 +1,257 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --first_choice: #33cae4;
+    --second_choice: #497980;
+    --third_choice: rgb(192, 246, 253);
+    --fourth_choice: rgb(234, 225, 225);
+    --fourth_choice: rgb(154, 150, 150);
+    --fifth_choice: #95dcff;
+    
+    font-size: 62%;
+}
+
+body {
+    background: rgb(255, 255, 255);
+    color: var(--fourth_choice);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Adding styling to the header section */
+header {
+    background: var(--second_choice);
+    padding: 30px 25px;
+    border-bottom: 5px solid var(--first_choice);
+}
+
+.page_title {
+    color: var(--first_choice);
+    margin-bottom: 5px;
+    margin-top: 0;
+    font-size: 4em;
+}
+
+/* Adding styling to the main section */
+.page_content {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 25px auto;
+    width: 97%;
+}
+
+.weather_report_container {
+    flex: 1;
+    margin: 0 20px 20px;
+    height: 3000px;
+}
+
+.report_list_container {
+    padding: 15px;
+    height: calc(100% - 70%);
+    background: url(../images/ocean2.jpg);
+    background-size: cover;
+    background-position: 100% 100%;
+    border-radius: 12px;
+    border: 2px solid var(--fifth);
+
+}
+
+.flex-container {
+    display: inline;
+    background-color: #290f99;
+    width: 100px;
+    height: auto;
+    text-align: left;
+
+}
+
+/* Create two columns that floats next to each other that holds the search bar and section that holds the report*/
+.column {
+    float: left;
+    width: 50%;
+    height: 700px;
+    padding: 10px;
+    overflow: auto;
+}
+
+/* Adding styling to the search bar */
+#search_bar_container {
+    border: 1px solid grey;
+    background: var(--fifth_choice);
+    border-radius: 2px;
+    float: left;
+    margin: 10px 10px 10px 10px;
+    width: 250px;
+    overflow: auto;
+}
+
+
+/* Style the search field */
+form.search_location input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+  }
+  
+  /* Style the submit button */
+  form.search_location button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  form.search_location button:hover {
+    background: #0b7dda;
+  }
+  
+  /* Clear floats */
+  form.search_location::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  /* Adding styling to the section histry that holds the searched locations */
+  .search_history {
+      margin-top: 10px;
+    width: auto;
+    height: auto;
+    border: 1px solid var(--second_choice);
+    border-end-end-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+/* Adding styling to the section that holds the weather report */
+#general_report_container {
+    margin: 10px 10px 10px 10px;
+    border: 1px solid var(--fourth_choice);
+    border-radius: 2px;
+}
+
+/* Adding styling to the section that holds yoday's weather report */
+  #today_weather_report_box .date_box{
+    align-items:left;
+    margin-right: 0;
+    text-decoration: underline;
+    font-size: 2em;
+}
+
+#today_weather_report_box {
+    align-items: left;
+    padding: 10px;
+}
+
+#today_weather_report_container {
+    background: rgb(180, 205, 210);
+    color: rgb(0, 0, 0);
+    font-size: 1.5em;
+    margin: 10px 0 10px 0;
+    padding: 0 20px 0 5px;
+    width: 100%;
+    border: 1px solid var(--first_choice);
+    border-radius: 15px;
+    
+
+}
+/* Adding styling to the section that holds the weekly weather forcast report */
+#weekly_report_container h2 {
+    color: #ffffff;
+    margin-left: 15px;
+    margin-bottom: 2px;
+    font-size: 2em;
+    background: rgb(28, 80, 95);
+    height: 40px;
+    width: 360px;
+    padding: 6px 0 0 20px;
+    border-radius: 10px;
+}
+
+.weekly_list_container {
+    display: flex;
+    flex-wrap: wrap;
+    content: counter();
+
+}
+
+.weekly_list_container {
+    align-items: center;
+}
+
+.weekly_list_container>div {
+    color: rgb(255, 255, 255);
+    background-color: #000000;
+    width: 200px;
+    height: 150px;
+    margin: 15px;
+    border-radius: 15px;
+}
+
+.report_container_box .date {
+    margin: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    font-size: 1.5em;
+    
+}
+
+.report_container p {
+    text-align: left;
+    margin-left: 10px;
+    opacity: 10;
+    font-size: 1.4em;
+}
+
+
+
+/* Applying media query to create different layouts depending on the size of the viewport make */
+@media screen and (max-width: 700px) {
+    #search_bar_container {
+        width: 100%;
+        height: 45px;
+        overflow: scroll;
+        flex-basis: 100%;
+        overflow: hidden;
+        background-color: white;
+        border: none;
+        padding: 0;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .report_container {
+        flex: 100%;
+        margin: 0;
+    }
+
+    #weekly_report_container {
+        width: 100%;
+    }
+
+    .weekly_list_container {
+        align-items: center;
+    }
+
+    .report_container_box {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+}
