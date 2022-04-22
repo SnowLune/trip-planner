@@ -1,5 +1,5 @@
 var searchField =document.querySelector(".location-search");
-var searchBtn =document.querySelector(".searchbtn");
+var searchBtn =document.querySelector("#findEventBtn");
 var ForecastContainer=document.querySelector(".forecastContainer")
 
 //create an event listener
@@ -77,7 +77,7 @@ function getForecast(lat,lon){
 
 
         }
-  
+  var currentContainer = document.querySelector(".day-events")
 function displayCurrent (data){
     var currentTemp=document.querySelector(".current-temp")
     currentTemp.textContent="Temperature: " +data.current.temp+"°F"
@@ -87,6 +87,10 @@ function displayCurrent (data){
     currentWind.textContent="Windspeed: "+data.current.wind_speed+" MPH"
     var currentUvi=document.querySelector(".current-uvi")
     currentUvi.textContent="Uvi: "+data.current.uvi
+    currentContainer.appendChild(currentTemp)
+    currentContainer.appendChild(currentHumid)
+    currentContainer.appendChild(currentWind)
+    currentContainer.appendChild(currentUvi)
 }
 
     
