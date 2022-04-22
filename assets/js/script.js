@@ -1,4 +1,4 @@
-var searchField =document.querySelector(".search-field");
+var searchField =document.querySelector(".location-search");
 var searchBtn =document.querySelector(".searchbtn");
 var ForecastContainer=document.querySelector(".forecastContainer")
 
