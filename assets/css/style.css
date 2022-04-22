@@ -1,11 +1,25 @@
-.header{
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* #findEventBtn {
+    background-color: rgb(255, 170, 170);
+    border-radius: 5px;
+    border: none;
+    padding: 0px 10px;
+  } */
+
+
+
+  
+/* .header{
     padding: 0.5rem;
     background-color: rgb(87, 181, 218);
 }
 .header-title{
     color: rgb(214, 209, 209);
     text-align: center;
-    
 }
 .search-field{
     border-radius: 5px;
@@ -27,4 +41,4 @@
  .searchContainer{
      padding-top: 2rem;
 
- }
+ } */

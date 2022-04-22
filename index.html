@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
    <head>
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,19 +9,33 @@
       <link rel="stylesheet" href="./assets/css/style.css" />
       <title>Trip Planner</title>
    </head>
+
+
    <body>
-      <header>
-         <form>
-            <div class="location">
-               <label for="location-search">Where are you going?</label>
-               <input type="search" name="location-search" />
+      <header class="p-5 flex-col sticky top-0 bg-gray-400">
+         <h6>
+            <a href="/">Trip Planner</a>
+         </h6>
+         <nav class="flex justify-around">
+            <form class="flex justify-between">
+               <div class="location px-2">
+                  <label for="location-search">Where are you going:</label>
+                  <input type="search" name="location-search" class="rounded-full px-3" />
+               </div>
+               <div class="date px-2 pr-5">
+                  <label for="date-search">Dates:</label>
+                  <input type="date" name="date-search" class="rounded-full px-3"/>
+               </div>
+               <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md">Find Events</button>
+            </form>
+            <div>
+               <a href="#about" class="px-2 hover:text-white">About</a>
+               <a href="" class="px-2 hover:text-white">GitHub</a>
             </div>
-            <div class="date">
-               <label for="date-search">When are you going?</label>
-               <input type="date" name="date-search" />
-            </div>
-         </form>
+         </nav>
       </header>
+
+
       <main id="main-content">
          <article class="day-events">
             <!-- dynamically generated section -->
