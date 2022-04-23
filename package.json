@@ -1,0 +1,23 @@
+{
+  "name": "trip-planner",
+  "version": "1.0.0",
+  "description": "University of Minnesota Coding Bootcamp - TEAM 8 - Project 1",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwind build src/style.css -o  assets/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnowLune/trip-planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SnowLune/trip-planner/issues"
+  },
+  "homepage": "https://github.com/SnowLune/trip-planner#readme",
+  "dependencies": {
+    "tailwindcss": "^3.0.24"
+  }
+}

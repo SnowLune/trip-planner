@@ -1,55 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Trip Planner</title>
+  </head>
 
-   <head>
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="stylesheet" href="./assets/css/style.css" />
-      <title>Trip Planner</title>
-   </head>
+  <body>
+    <header class="p-5 flex-col sticky top-0 bg-slate-400 sm:text-center">
+      <h6 class="text-center">
+        <a href="/">Trip Planner</a>
+      </h6>
+      <nav class="flex justify-around">
+        <form
+          class="flex justify-between sm:grid :grid-rows-3 sm:grid-flow-col gap-4"
+        >
+          <div class="location px-2">
+            <label for="location-search">Where are you going:</label>
+            <input
+              type="search"
+              name="location-search"
+              class="rounded-full px-3"
+            />
+          </div>
+          <div
+            class="date px-2 pr-5 sm:grid sm:grid-rows-3 sm:grid-flow-col gap-4"
+          >
+            <label for="date-search">Dates:</label>
+            <input type="date" name="date-search" class="rounded-full px-3" />
+          </div>
+          <button
+            id="findEventBtn"
+            class="px-3 bg-sky-500 hover:bg-sky-600 focus:ring rounded-md"
+          >
+            Find Events
+          </button>
+        </form>
+        <div>
+          <a href="#about" class="px-2 hover:text-white">About</a>
+          <a href="" class="px-2 hover:text-white">GitHub</a>
+        </div>
+      </nav>
+    </header>
 
-
-   <body>
-      <header class="p-5 flex-col sticky top-0 bg-gray-400">
-         <h6>
-            <a href="/">Trip Planner</a>
-         </h6>
-         <nav class="flex justify-around">
-            <form class="flex justify-between">
-               <div class="location px-2">
-                  <label for="location-search">Where are you going:</label>
-                  <input type="search" name="location-search" class="rounded-full px-3" />
-               </div>
-               <div class="date px-2 pr-5">
-                  <label for="date-search">Dates:</label>
-                  <input type="date" name="date-search" class="rounded-full px-3"/>
-               </div>
-               <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md">Find Events</button>
-            </form>
-            <div>
-               <a href="#about" class="px-2 hover:text-white">About</a>
-               <a href="" class="px-2 hover:text-white">GitHub</a>
-            </div>
-         </nav>
-      </header>
-
-
-      <main id="main-content">
-         <article class="day-events">
-            <!-- dynamically generated section -->
-            <!-- <section class="day">
+    <main id="main-content">
+      <article class="day-events">
+        <!-- dynamically generated section -->
+        <!-- <section class="day">
                <h2 class="weather">Mon Jan 01 2025</h2>
                <div class="weather">
                </div>
                <div class="event">
                </div>
             </section> -->
-         </article>
-      </main>
-      <footer></footer>
-      
-      <script src="./assets/js/script.js"></script>
-   </body>
+      </article>
+    </main>
+    <footer></footer>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
 </html>
