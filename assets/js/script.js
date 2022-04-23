@@ -95,11 +95,35 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
+// Test objects for createDay()
+const debug_WeatherObj = {
+   high: 34,
+   low: 10,
+   main: "Clear",
+   mainIconID: "",
+   mainIconURL: ""
+};
+const debug_EventsArr = [{
+   thumbnail: "",
+   title: "Test Debug in Concert",
+   time: "3:00pm",
+   venue: "Big Concert Hall",
+   description: "Test Debug lorem ipsum tour"
+},
+{
+   thumbnail: "",
+   title: "Test Debug 2 in Concert",
+   time: "9:00pm",
+   venue: "Music Place Center",
+   description: "Test Debug lorem ipsum tour 2"
+}];
+
 /************************************* 
- *    Dynamic creation of day section
+ * Dynamic creation of day section
  *************************************/
 // date: a string with the long date ex. "Thursday January 1, 1970"
-// weatherObj: an object containing at least high(float), low(float), main(str), mainIconID(str)
+// weatherObj: an object containing at least high(float), low(float), 
+//    main(str), mainIconID(str)
 // eventsArr: an array of objects containing
 function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
@@ -123,7 +147,8 @@ function createDay(date, weatherObj, eventsArr) {
    // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
    weatherMainIcon.className = "weather-main-icon";
-   weatherMainIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherObj.mainIconID + "@2x.png");
+   weatherMainIcon.setAttribute("src", weatherObj.mainIconURL);
+   //"https://openweathermap.org/img/wn/" + weatherObj.mainIconID + "@2x.png");
    weatherMain.appendChild(weatherMainIcon);
 
    // text: "Clear", "Cloudy", "Tstorms", etc
@@ -156,9 +181,50 @@ function createDay(date, weatherObj, eventsArr) {
    //
    //   EVENTS
    //
-   var event = document.createElement("div");
-   event.className = "event";
-   day.appendChild(event);
+   var events = document.createElement("div");
+   events.className = "events";
+
+   for (let i = 0; i < eventsArr.length; i++) {
+      var event = document.createElement("div");
+      event.className = "event";
+
+      var eventThumbnail = document.createElement("img");
+      eventThumbnail.className = "event-thumbnail";
+      eventThumbnail.setAttribute("src", eventsArr[i].thumbnail);
+      event.appendChild(eventThumbnail);
+
+      var eventTitle = document.createElement("p");
+      eventTitle.className = "event-title";
+      eventTitle.textContent = eventsArr[i].title;
+      event.appendChild(eventTitle);
+
+      // container for event time and event venue
+      var eventTimeVenue = document.createElement("p");
+      eventTimeVenue.className = "event-time-and-venue";
+      // event time
+      var eventTime = document.createElement("span");
+      eventTime.className = "event-time";
+      eventTime.textContent = eventsArr[i].time;
+      eventTimeVenue.appendChild(eventTime);
+      // event venue
+      var eventVenue = document.createElement("span");
+      eventVenue.className = "event-venue";
+      eventVenue.textContent = eventsArr[i].venue;
+      eventTimeVenue.appendChild(eventVenue);
+
+      event.appendChild(eventTimeVenue);
+
+      // paragraph describing the event from TicketMaster api
+      var eventDescription = document.createElement("p");
+      eventDescription.className = "event-description";
+      eventDescription.textContent = eventsArr[i].description;
+
+      event.appendChild(eventDescription);
+
+      events.appendChild(event);
+   }
+
+   day.appendChild(events);
 
    dayEvents.appendChild(day);
 }
