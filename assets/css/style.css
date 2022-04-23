@@ -3,42 +3,10 @@
     padding: 0;
   }
 
-  /* #findEventBtn {
-    background-color: rgb(255, 170, 170);
-    border-radius: 5px;
-    border: none;
-    padding: 0px 10px;
-  } */
+/* main {
+    background-color: blue;
+} */
 
-
-
-  
-/* .header{
-    padding: 0.5rem;
-    background-color: rgb(87, 181, 218);
-}
-.header-title{
-    color: rgb(214, 209, 209);
-    text-align: center;
-}
-.search-field{
-    border-radius: 5px;
-    outline: none;
-    padding:1rem;
-}
-.searchbtn{
-    border-radius: 5px;
-    outline: none;
-    padding:1rem; 
-} 
-.hero{
-    margin-bottom: 2rem;
-    background-image: url("https://source.unsplash.com/1600x900/?landscape"); 
-    background-size: cover;
-    background-position: center;
-    min-height: 50vh;
-}
- .searchContainer{
-     padding-top: 2rem;
-
- } */
+/* body {
+    background-color: coral;
+} */
