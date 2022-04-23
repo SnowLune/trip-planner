@@ -95,49 +95,67 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
-// dynamic creation of day section
-function createDay(date, weatherObj, eventObj) {
+/************************************* 
+ *    Dynamic creation of day section
+ *************************************/
+// date: a string with the long date ex. "Thursday January 1, 1970"
+// weatherObj: an object containing at least high(float), low(float), main(str), mainIconID(str)
+// eventsArr: an array of objects containing
+function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
    day.className = "day";
 
    var dateHeader = document.createElement("h2");
+   dateHeader.className = "event-date";
    dateHeader.textContent = date;
    day.appendChild(dateHeader);
 
+   //
+   //   WEATHER
+   //
    var weather = document.createElement("div");
    weather.className = "weather";
 
-   if (!weatherObj) {
-   }
-
-   var weatherHigh = document.createElement("p");
-   weatherHigh.className = "weather";
-   weatherHigh.textContent = weatherObj.high;
-   weather.appendChild(weatherHigh);
-
-   var weatherLow = document.createElement("p");
-   weatherLow.className = "weather";
-   weatherLow.textContent = weatherObj.low;
-   weather.appendChild(weatherLow);
-
+   // container for current condition icon and description
    var weatherMain = document.createElement("div");
-   weatherMain.className = "weather";
+   weatherMain.className = "weather-main";
+
+   // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
    weatherMainIcon.className = "weather-main-icon";
    weatherMainIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherObj.mainIconID + "@2x.png");
    weatherMain.appendChild(weatherMainIcon);
+
    // text: "Clear", "Cloudy", "Tstorms", etc
    var weatherMainText = document.createElement("p");
+   weatherMainText.className = "weather-main-text";
    weatherMainText.textContent = weatherObj.main;
    weatherMain.appendChild(weatherMainText);
 
    weather.appendChild(weatherMain);
 
+   // container for high and low temps
+   var weatherTemp = document.createElement("div");
+   weatherTemp.className = "weather-temp";
+
+   var weatherHigh = document.createElement("p");
+   weatherHigh.className = "weather-high";
+   weatherHigh.textContent = weatherObj.high;
+   weatherTemp.appendChild(weatherHigh);
+
+   var weatherLow = document.createElement("p");
+   weatherLow.className = "weather-low";
+   weatherLow.textContent = weatherObj.low;
+   weatherTemp.appendChild(weatherLow);
    
+   weather.appendChild(weatherTemp);
    
-   
+   // append the entire weather div
    day.appendChild(weather);
 
+   //
+   //   EVENTS
+   //
    var event = document.createElement("div");
    event.className = "event";
    day.appendChild(event);
