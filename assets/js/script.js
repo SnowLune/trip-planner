@@ -2,8 +2,9 @@ var searchField = document.querySelector(".location-search");
 var searchBtn = document.querySelector("#findEventBtn");
 var ForecastContainer = document.querySelector(".forecastContainer");
 var dayEvents = document.querySelector("article.day-events");
+var navForm = document.getElementById("nav-form");
 
-//create an event listener
+// create an event listener
 searchBtn.addEventListener("click", function (event) {
    event.preventDefault();
    console.log(searchField.value);
@@ -112,6 +113,15 @@ class Event {
 // Returns an event object
 function getEvents(date, location, count = 3) {
    var event = new Event;
+}
+
+function submitHandler(event) {
+   event.preventDefault();
+   let locationEl = document.getElementById("locationSearch");
+   let dateEl = document.getElementById("dateSearch");
+   // var timezoneOffset = "-0500";
+   // let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+   // console.dir(d);
 }
 
 // Test objects for createDay()
@@ -248,6 +258,7 @@ function createDay(date, weatherObj, eventsArr) {
    dayEvents.appendChild(day);
 }
 
+navForm.addEventListener("submit", submitHandler);
 // displayDate()
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
