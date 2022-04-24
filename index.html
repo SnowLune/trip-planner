@@ -11,7 +11,7 @@
    </head>
 
 
-   <body class="bg-gray-100">
+   <body class="bg-gray-100 h-screen">
       <header class="p-5 flex flex-col sticky top-0 bg-gray-400">
          <h6>
             <a href="/">Trip Planner</a>
@@ -36,7 +36,7 @@
       </header>
 
 
-      <main class="max-w-7xl h-full bg-gray-300 m-auto" id="main-content">
+      <main class="max-w-7xl bg-gray-300 m-auto h-full" id="main-content">
          <article class="day-events flex-1">
             <!-- dynamically generated section -->
             <!-- <section class="day">
@@ -46,46 +46,44 @@
                <div class="event">
                </div>
             </section> -->
-         </article>
 
-
-
-         <section class="day">
+            <section class="day m-8 p-5">
             
-            <h2 class="event-date">Thu Jan 1, 1970</h2>
-            <div class="weather">
-               <div class="weather-main">
-                  <img class="weather-main-icon" src="">
-                  <p class="weather-main-text">Clear</p>
+               <h2 class="event-date">Thu Jan 1, 1970</h2>
+               <div class="weather">
+                  <div class="weather-main">
+                     <img class="weather-main-icon" src="">
+                     <p class="weather-main-text">Clear</p>
+                  </div>
+                  <div class="weather-temp">
+                     <p class="weather-high">34</p>
+                     <p class="weather-low">10</p>
+                  </div>
                </div>
-               <div class="weather-temp">
-                  <p class="weather-high">34</p>
-                  <p class="weather-low">10</p>
+   
+               <div class="events">
+                  <div class="event">
+                     <img class="event-thumbnail" src="">
+                     <p class="event-title">Test Debug in Concert</p>
+                     <p class="event-time-and-venue">
+                        <span class="event-time">3:00pm</span>
+                        <span class="event-venue">Big Concert Hall</span>
+                     </p>
+                     <p class="event-description">Test Debug lorem ipsum tour</p>
+                  </div>
+                  <div class="event">
+                     <img class="event-thumbnail" src="">
+                     <p class="event-title">Test Debug 2 in Concert</p>
+                     <p class="event-time-and-venue">
+                        <span class="event-time">9:00pm</span>
+                        <span class="event-venue">Music Place Center</span>
+                     </p>
+                     <p class="event-description">Test Debug lorem ipsum tour 2</p>
+                  </div>
                </div>
-            </div>
-
-            <div class="events">
-               <div class="event">
-                  <img class="event-thumbnail" src="">
-                  <p class="event-title">Test Debug in Concert</p>
-                  <p class="event-time-and-venue">
-                     <span class="event-time">3:00pm</span>
-                     <span class="event-venue">Big Concert Hall</span>
-                  </p>
-                  <p class="event-description">Test Debug lorem ipsum tour</p>
-               </div>
-               <div class="event">
-                  <img class="event-thumbnail" src="">
-                  <p class="event-title">Test Debug 2 in Concert</p>
-                  <p class="event-time-and-venue">
-                     <span class="event-time">9:00pm</span>
-                     <span class="event-venue">Music Place Center</span>
-                  </p>
-                  <p class="event-description">Test Debug lorem ipsum tour 2</p>
-               </div>
-            </div>
-
-         </section>
+   
+            </section>
+         </article>
 
       </main>
       <footer></footer>
