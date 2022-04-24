@@ -17,16 +17,16 @@
             <a href="/">Trip Planner</a>
          </h6>
          <nav class="flex justify-around">
-            <form class="flex justify-between">
+            <form id="nav-form" class="flex justify-between">
                <div class="location px-2">
-                  <label for="location-search">Where are you going:</label>
-                  <input type="search" name="location-search" class="rounded-full px-3 location-search" />
+                  <label for="location">Where are you going:</label>
+                  <input type="search" id="locationSearch" name="location" class="rounded-full px-3" required />
                </div>
                <div class="date px-2 pr-5">
-                  <label for="date-search">Dates:</label>
-                  <input type="date" name="date-search" class="rounded-full px-3 date-search"/>
+                  <label for="date">Date:</label>
+                  <input type="date" id="dateSearch" name="date" class="rounded-full px-3" required />
                </div>
-               <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md">Find Events</button>
+               <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md" type="submit">Find Events</button>
             </form>
             <div>
                <a href="#about" class="px-2 hover:text-white">About</a>
