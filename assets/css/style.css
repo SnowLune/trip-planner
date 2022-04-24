@@ -476,4 +476,165 @@ Ensure the default browser behavior of the `hidden` attribute.
 /* body {
     background-color: coral;
 } */
->>>>>>> 677676d7eb9b63c063f91b4123e213d626a78ad7
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+  --first_choice: #33cae4;
+  --second_choice: #497980;
+  --third_choice: rgb(192, 246, 253);
+  --fourth_choice: rgb(234, 225, 225);
+  --fourth_choice: rgb(154, 150, 150);
+  --fifth_choice: #95dcff;
+  font-size: 62%;
+}
+
+/* Adding styling to the header section */
+
+
+
+/* Adding styling to the main section */
+.page_content {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+
+
+#general_weather_report_container {
+  margin: 10px;
+  padding: 15px;
+  height: calc(100% - 70%);
+  background: url(../images/ocean2.jpg);
+  background-size: cover;
+  background-position: 100% 100%;
+  border-radius: 12px;
+  border: 2px solid var(--fifth);
+  overflow: scroll;
+}
+
+
+#event_report_container,
+#general_weather_report_container {
+  border: 1px solid var(--fourth_choice);
+  border-radius: 2px;
+  height: 500px;
+  overflow: auto;
+  width: 100%;
+  margin-left: 0;
+  margin-left: 0;
+}
+
+#events {
+  border: 2px solid rgb(50, 51, 52);
+  border-bottom: 0px solid rgb(20, 20, 20);
+}
+#events a:link {
+  padding-left: 10px;
+  display: block;
+  border-bottom: 1px solid rgb(20, 20, 20);
+  text-decoration: none;
+  width: 100%;
+ }
+.panel-footer ul {
+  display: flex;
+ 
+}
+.panel-footer li #prev a{
+  flex: 1; 
+  margin-left: 50px;
+}
+
+.panel-footer li #next a{
+  margin-: 50px;
+}
+/* Adding styling to the section that holds the weather report */
+
+/* Adding styling to the section that holds tyoday's weather report */
+#today_weather_report_container h3 {
+  color: black;
+  margin: 20px 0 5px 10px;
+  font-size: 1.5em;
+  line-height: 1px;
+}
+
+#today_weather_report_box {
+  align-items: left;
+  padding: 10px;
+}
+
+#event_report_container{
+  background: rgb(180, 205, 210, .8);
+  color: rgb(0, 0, 0);
+  font-size: 1em;
+ 
+  padding: 0 20px 0 30px;
+  width: 100%;
+  border: 1px solid var(--first_choice);
+  line-height: 2em;
+}
+#general_weather_report_container {
+  color: rgb(0, 0, 0);
+  font-size: 1em;
+  margin: 10px 0 10px 0;
+  padding: 0 20px 0 20px;
+  border: 1px solid var(--first_choice);
+  line-height: 2em;
+}
+
+#today_weather_report_container {
+  background: rgb(180, 205, 210, .8);
+  color: rgb(0, 0, 0);
+  font-size: 1em;
+  margin: 5px;
+  padding: 0 20px 0 30px;
+  border: 1px solid var(--first_choice);
+  border-radius: 15px;
+  line-height: 12px;
+}
+
+/* Adding styling to the section that holds the weekly weather forcast report */
+#weekly_report_container h2 {
+  color: #000000;
+  font-size: 1.7em;
+  height: 30px;
+  margin: 0;
+  padding: 7px 0 6px 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid var(--color_7);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* Applying media query to create different layouts depending on the size of the viewport make */
+@media screen and (max-width: 1000px) {
+  
+  header {
+      margin-top: 0;
+      padding: 5px;
+  }
+ 
+}
