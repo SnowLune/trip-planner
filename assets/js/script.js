@@ -95,6 +95,25 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
+class Event {
+   constructor() {
+      this.title = "";
+      this.url = "";
+      this.image = "";
+      this.description = "";
+      this.time = "";
+      this.venue = "";
+   }
+}
+
+/**********************
+ * Pull TicketMaster
+ **********************/
+// Returns an event object
+function getEvents(date, location, count = 3) {
+   var event = new Event;
+}
+
 // Test objects for createDay()
 const debug_WeatherObj = {
    high: 34,
