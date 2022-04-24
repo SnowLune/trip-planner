@@ -105,14 +105,19 @@ class Event {
       this.time = "";
       this.venue = "";
    }
+
+   pullEvent(location, date) {
+      // create request and fetch ticketmaster api
+   }
 }
 
 /**********************
  * Pull TicketMaster
  **********************/
 // Returns an event object
-function getEvents(date, location, count = 3) {
-   var event = new Event;
+function getEvents(location, date, count = 3) {
+   let events = [];
+   let e = new Event();
 }
 
 function submitHandler(event) {
