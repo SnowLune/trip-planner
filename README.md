@@ -5,14 +5,12 @@ University of Minnesota Coding Bootcamp - TEAM 8 - Project 1
 ## About
 
 A trip planner that allows the user to choose a location and date. After the
-user selects a location and date the page will return relevant weather and
+user selects a location and date, the page will return relevant weather and
 attraction information on the page.
 
 ## User Story
 
-**AS A** traveller, **I WANT** to see the weather and local attractions of the
-destination I am visiting at the time I am visiting, **SO THAT** I can gain
-insight and plan ahead.
+**AS A** traveller, **I WANT** to find local attractions in the destination that I am visiting and check what the weather forecast will be during my visit, **SO THAT** I can gain insight and plan ahead.
 
 ## APIs
 
@@ -28,6 +26,13 @@ insight and plan ahead.
 [Open Weather API](https://openweathermap.org/api/one-call-api)
 [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
 
+## Contributors
+
+ Vue Lee
+ Abyou Geletu
+ Mayra Ibarra
+ Luna Roberge
+
 ## Screenshots
 
 ## Live Website
@@ -35,11 +40,6 @@ insight and plan ahead.
 [Live App]()
 
 
-## Contributors
 
- Vue Lee
- Abyou Geletu
- Mayra Ibarra
- Luna Roberge
 
 
