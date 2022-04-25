@@ -92,28 +92,81 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
+// Event class with methods for fetching and manipulating event information
 class Event {
    constructor() {
-      this.title = "";
-      this.url = "";
-      this.image = "";
-      this.description = "";
-      this.time = "";
-      this.venue = "";
+      this.data = {};
+      this.eventGroup = [];
+      this.key = keyRing.ticketmaster;
    }
-
-   pullEvent(location, date) {
+      
+   async pullEvents(location, date, key = this.key) {
       // create request and fetch ticketmaster api
+      if (!location || !date || !key) {
+         if (!location) {
+            console.error(location + " is not a valid location object");
+         }
+         if (!date) {
+            console.error(date + " is not a valid date object");
+         }
+         if (!key) {
+            console.error("No valid API key passed.");
+         }
+         return false;
+      }
+   
+      const baseURL = "https://app.ticketmaster.com/discovery/v2/";
+      
+      // Get date 24 hours from start date
+      const datePlus = new Date(date);
+      datePlus.setDate(datePlus.getDate() + 1);
+
+      // Remove fraction of seconds because the API doesn't like them
+      function toBetterISO(dateStr) {
+         return dateStr.toISOString().split(".")[0] + "Z";
+      }
+
+      const param = "events?apikey=" + key + 
+            "&latlong=" + location.latitude + 
+            "," + location.longitude + 
+            "&radius=30&unit=miles&locale=*&startDateTime=" + 
+            toBetterISO(date) + "&endDateTime=" + toBetterISO(datePlus);
+      var requestURL = baseURL + param;
+      console.log(requestURL);
+      try {
+         const response = await fetch(requestURL, 
+         {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'same-origin'
+         });
+         const eventsData = await response.json();
+         return eventsData;
+      }
+      catch (error) {
+         console.error(error);
+      }
    }
 }
 
 /**********************
  * Pull TicketMaster
  **********************/
+// Takes location object, date object, and count of events to fetch
 // Returns an event object
-function getEvents(location, date, count = 3) {
-   let events = [];
-   let e = new Event();
+async function getEvents(location, date, count = 3) {
+   if (!count) {
+      console.error(count + " is not a valid number. (signed int)");
+      return false;
+   }
+   else if (count < 0) {
+      console.error("Count must be greater than zero");
+      return false;
+   }
+
+   var e = new Event();
+   e.data = await e.pullEvents(location, date);
+   return e;
 }
 
 class Location {
@@ -142,7 +195,6 @@ class Location {
             method: 'GET'
          });
          const geoCodeData = await response.json();
-         // console.log(geoCodeData);
          return geoCodeData;
       }
       catch (error) {
@@ -188,7 +240,11 @@ class Location {
 
 async function submitHandler(event) {
    event.preventDefault();
-
+   // Remove existing '.day' elements
+   const dayEls = document.querySelectorAll('.day-events *');
+   dayEls.forEach(dayEl => {
+      dayEl.remove();
+   })
    // Get geocoding data from PositionStack
    var l = new Location(locationEl.value);
    l.data = await l.requestGeoData();
@@ -197,10 +253,43 @@ async function submitHandler(event) {
 
    // Parse Date
    var timezoneOffset = l.bestMatch.timezone_module.offset_string;
-   let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+   var d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
    
+   // 3 days at a time
+   var day = d;
    for (let i = 0; i < 3; i++) {
-      // createDay()
+      var dayNext = new Date(day);
+      dayNext.setDate(dayNext.getDate() + 1);
+
+      // Get Weather
+
+      // Get Events
+      var todaysEvents = await getEvents(l.bestMatch, day);
+      console.log(todaysEvents);
+
+      // Break if we don't find any events this day
+      if (todaysEvents.data.page.totalElements > 0) {
+         var eventCount = 3;
+         if (todaysEvents.data._embedded.events.length < eventCount) {
+            eventCount = todaysEvents.data._embedded.events.length;
+         }
+
+         for (let j = 0; j < eventCount; j++) {
+            var event = todaysEvents.data._embedded.events[j];
+            if (event) {
+               todaysEvents.eventGroup.push(event);
+            }
+            else {
+               break;
+            }
+         }
+      }
+      
+      console.log(todaysEvents.eventGroup);
+      createDay("test", debug_WeatherObj, todaysEvents.eventGroup);
+
+      // Increment day
+      day = dayNext;
    }
 }
 
@@ -292,22 +381,33 @@ function createDay(date, weatherObj, eventsArr) {
    //
    //   EVENTS
    //
-
-var events = document.createElement("div");
+   var events = document.createElement("div");
    events.className = ('events', 'bg-slate-50', 'p-5');
 
    for (let i = 0; i < eventsArr.length; i++) {
+      var e = {
+         name: eventsArr[i].name,
+         image: eventsArr[i].images[0].url,
+         venue: eventsArr[i]._embedded.venues[0].name,
+         time: eventsArr[i].dates.start.localTime,
+         info: eventsArr[i].info,
+         url: eventsArr[i].url
+      }
+
       var event = document.createElement("div");
       event.className = "event";
 
       var eventThumbnail = document.createElement("img");
-      eventThumbnail.className = "event-thumbnail";
-      eventThumbnail.setAttribute("src", eventsArr[i].thumbnail);
+      eventThumbnail.className = "event-thumbnail object-fill w-32 h-24";
+      if (e.image) {
+         eventThumbnail.setAttribute("src", e.image);
+      }
       event.appendChild(eventThumbnail);
 
-      var eventTitle = document.createElement("p");
+      var eventTitle = document.createElement("a");
       eventTitle.className = "event-title";
-      eventTitle.textContent = eventsArr[i].title;
+      eventTitle.setAttribute("href", e.url);
+      eventTitle.textContent = e.name;
       event.appendChild(eventTitle);
 
       // container for event time and event venue
@@ -316,12 +416,16 @@ var events = document.createElement("div");
       // event time
       var eventTime = document.createElement("span");
       eventTime.className = "event-time";
-      eventTime.textContent = eventsArr[i].time;
+      if (e.time) {
+         eventTime.textContent = e.time;
+      }
       eventTimeVenue.appendChild(eventTime);
       // event venue
       var eventVenue = document.createElement("span");
       eventVenue.className = "event-venue";
-      eventVenue.textContent = eventsArr[i].venue;
+      if (e.venue) {
+         eventVenue.textContent = e.venue;
+      }
       eventTimeVenue.appendChild(eventVenue);
 
       event.appendChild(eventTimeVenue);
@@ -329,7 +433,9 @@ var events = document.createElement("div");
       // paragraph describing the event from TicketMaster api
       var eventDescription = document.createElement("p");
       eventDescription.className = "event-description";
-      eventDescription.textContent = eventsArr[i].description;
+      if (e.info) {
+         eventDescription.textContent = e.info;
+      }
 
       event.appendChild(eventDescription);
 
