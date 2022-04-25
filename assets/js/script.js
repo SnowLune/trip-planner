@@ -96,6 +96,8 @@ class Location {
    constructor(searchTerm) {
       this.search = searchTerm;
       this.key = keyRing.position_stack;
+      this.data = [];
+      this.bestMatch = {};
    }
 
    async requestGeoData(searchTerm = this.search, key = this.key) {
@@ -125,21 +127,38 @@ class Location {
    }
 
    findBestMatch(data = this.data) {
-      if (this.search.includes(" ")) {
-         var queryLastWord = this.search.split(" ").pop().toLowerCase();
-      }
-      else {
-         var queryLastWord = this.search;
-      }
-      
-      for (let i = 0; i < this.data.length; i++) {
-         if (data[i].name
+
+      // Find best match with search query
+      var bestMatch = null;
+      var altMatch = null;
+
+      for (let i = 0; i < data.data.length; i++) {
+         
+         // current iteration location data object
+         var current = data.data[i];
+
+         // name of location actually matches a word in search term
+         if (current.name
             .toLowerCase()
-               .includes(queryLastWord)
+            .includes(this.search)
          ) {
-            return data[i];
+            // prioritize US search
+            if (current.country_code == "USA") {
+               bestMatch = current;
+            }
+            // First matching outside US
+            else if (!altMatch) {
+               altMatch = current;
+            }
+         }
+         else {
+            bestMatch = data.data[0];
          }
       }
+      if (!bestMatch) {
+         bestMatch = altMatch;
+      }
+      return bestMatch;
    }
 }
 
@@ -147,15 +166,18 @@ async function submitHandler(event) {
    event.preventDefault();
 
    // Get geocoding data from PositionStack
-   var locData = new Location();
-   locData.data = await locData.requestGeoData(locationEl.value);
-   console.log(locData.data);
-   // console.log(locData.findBestMatch());
+   var l = new Location(locationEl.value);
+   l.data = await l.requestGeoData();
+   l.bestMatch = l.findBestMatch();
+   console.log(l.bestMatch);
+
    // Parse Date
-   var timezoneOffset = "-0500";
+   var timezoneOffset = l.bestMatch.timezone_module.offset_string;
    let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
    
-   // console.dir(d);
+   for (let i = 0; i < 3; i++) {
+      // createDay()
+   }
 }
 
 // Test objects for createDay()
