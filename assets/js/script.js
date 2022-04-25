@@ -1,7 +1,6 @@
-// Global El
-var searchField = document.querySelector(".location-search");
+var searchField = document.querySelector("#locationSearch");
 var searchBtn = document.querySelector("#findEventBtn");
-var ForecastContainer = document.querySelector(".forecastContainer");
+var ForecastContainer = document.querySelector(".weather-main");
 var dayEvents = document.querySelector("article.day-events");
 var navForm = document.getElementById("nav-form");
 
@@ -60,13 +59,11 @@ function getForecast(lat, lon) {
    });
 
    //for loop for five day forecast
-   function getForecast(lat, lon) {
-      var numbers = [0, 1, 2, 3, 4, 5];
-      for (var i = 0; i < numbers.length; i++) {
-         console.log(numbers[i]);
-      }
+   function getForecast (data) {
+      var today = moment();
+      for (var i = 1; i<6; i++) 
+         console.log(data[i]);
    }
-}
 var currentContainer = document.querySelector(".day-events");
 function displayCurrent(data) {
    var currentTemp = document.querySelector(".current-temp");
