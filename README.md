@@ -35,9 +35,12 @@ attraction information on the page.
 
 ## Screenshots
 
+Insert picture
+
 ## Live Website
 
 [Live App]()
+
 
 
 
