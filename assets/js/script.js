@@ -1,15 +1,13 @@
-var searchField = document.querySelector(".location-search");
+var searchField = document.querySelector("#locationSearch");
 var searchBtn = document.querySelector("#findEventBtn");
-var ForecastContainer = document.querySelector(".forecastContainer");
+var ForecastContainer = document.querySelector(".weather-main");
 var dayEvents = document.querySelector("article.day-events");
 var navForm = document.getElementById("nav-form");
 
-// create an event listener
-searchBtn.addEventListener("click", function (event) {
-   event.preventDefault();
-   console.log(searchField.value);
-   getCordinates(searchField.value);
-});
+// Search Form
+var locationEl = document.getElementById("locationSearch");
+var dateEl = document.getElementById("dateSearch");
+
 var apiKey = "5056fb3f5552cba986f4ea65f8eec72e";
 
 function getCordinates(city) {
@@ -59,14 +57,12 @@ function getForecast(lat, lon) {
          //displayCordinates(data)
       });
    });
-
-   //for loop for five day forecast
-   function getForecast(lat, lon) {
-      var numbers = [0, 1, 2, 3, 4, 5];
-      for (var i = 0; i < numbers.length; i++) {
-         console.log(numbers[i]);
-      }
-   }
+}
+//for loop for five day forecast
+function getForecast (data) {
+   var today = moment();
+   for (var i = 1; i<6; i++) 
+      console.log(data[i]);
 }
 var currentContainer = document.querySelector(".day-events");
 function displayCurrent(data) {
@@ -96,12 +92,69 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
-function submitHandler(event) {
+class Location {
+   constructor(searchTerm) {
+      this.search = searchTerm;
+      this.key = keyRing.position_stack;
+   }
+
+   async requestGeoData(searchTerm = this.search, key = this.key) {
+
+      if (!searchTerm || !key) {
+   
+         !searchTerm ? console.error("No valid query string passed")
+            : console.error("No valid API key passed");
+      }
+   
+      const baseURL = "http://api.positionstack.com/v1/"
+      const param = "forward?access_key=" + key + "&query=" + searchTerm +
+            "&timezone_module=1" + "&output=json";
+      var requestURL = baseURL + param;
+      
+      try {
+         const response = await fetch(requestURL, {
+            method: 'GET'
+         });
+         const geoCodeData = await response.json();
+         // console.log(geoCodeData);
+         return geoCodeData;
+      }
+      catch (error) {
+         console.error(error);
+      }
+   }
+
+   findBestMatch(data = this.data) {
+      if (this.search.includes(" ")) {
+         var queryLastWord = this.search.split(" ").pop().toLowerCase();
+      }
+      else {
+         var queryLastWord = this.search;
+      }
+      
+      for (let i = 0; i < this.data.length; i++) {
+         if (data[i].name
+            .toLowerCase()
+               .includes(queryLastWord)
+         ) {
+            return data[i];
+         }
+      }
+   }
+}
+
+async function submitHandler(event) {
    event.preventDefault();
-   let locationEl = document.getElementById("locationSearch");
-   let dateEl = document.getElementById("dateSearch");
-   // var timezoneOffset = "-0500";
-   // let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+
+   // Get geocoding data from PositionStack
+   var locData = new Location();
+   locData.data = await locData.requestGeoData(locationEl.value);
+   console.log(locData.data);
+   // console.log(locData.findBestMatch());
+   // Parse Date
+   var timezoneOffset = "-0500";
+   let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+   
    // console.dir(d);
 }
 
@@ -137,22 +190,28 @@ const debug_EventsArr = [{
 // eventsArr: an array of objects containing
 function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
-   day.className = "day";
+      day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
+
+   var weatherContainer = document.createElement('div');
+      weatherContainer.className = ('bg-gray-300', 'p-5');
+      day.appendChild(weatherContainer);
 
    var dateHeader = document.createElement("h2");
-   dateHeader.className = "event-date";
-   dateHeader.textContent = date;
-   day.appendChild(dateHeader);
+      dateHeader.className = ('event-date', 'pb-2', 'font-bold');
+      dateHeader.textContent = date;
+      weatherContainer.appendChild(dateHeader);
 
    //
    //   WEATHER
    //
    var weather = document.createElement("div");
-   weather.className = "weather";
+      weather.className = "weather";
+      weatherContainer.appendChild(weather);
 
    // container for current condition icon and description
    var weatherMain = document.createElement("div");
-   weatherMain.className = "weather-main";
+      weatherMain.className = "weather-main";
+      // append child for this element is on line 229
 
    // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
@@ -186,12 +245,16 @@ function createDay(date, weatherObj, eventsArr) {
    weather.appendChild(weatherTemp);
    
    // append the entire weather div
-   day.appendChild(weather);
+   weatherContainer.appendChild(weather);
 
    //
    //   EVENTS
    //
-   var events = document.createElement("div");
+var eventContainer = document.createElement("div");
+   eventContainer.className = ('bg-slate-50', 'p-5');
+   // append child for this element is on line #
+
+var events = document.createElement("div");
    events.className = "events";
 
    for (let i = 0; i < eventsArr.length; i++) {
@@ -234,12 +297,19 @@ function createDay(date, weatherObj, eventsArr) {
       events.appendChild(event);
    }
 
-   day.appendChild(events);
+   eventContainer.appendChild(events);
 
-   dayEvents.appendChild(day);
+   dayEvents.appendChild(eventContainer);
 }
 
 navForm.addEventListener("submit", submitHandler);
 // displayDate()
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+
+window.onload = () => {
+   var today = new Date();
+   today = today.toISOString().split("T")[0];
+   dateEl.value = today;
+   dateEl.setAttribute("min", today);
+}
