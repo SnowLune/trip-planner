@@ -35,11 +35,12 @@ attraction information on the page.
 
 ## Screenshots
 
-Insert picture
+![image](./assets/images/previewwa.png)
 
 ## Live Website
 
-[Live App]()
+[Link](https://snowlune.github.io/trip-planner/)
+
 
 
 
