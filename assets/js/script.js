@@ -1,34 +1,14 @@
-var searchField = document.querySelector("#locationSearch");
-var searchBtn = document.querySelector("#findEventBtn");
-var ForecastContainer = document.querySelector(".weather-main");
-var dayEvents = document.querySelector("article.day-events");
-var navForm = document.getElementById("nav-form");
+/***************************
+ * Trip Planner, script.js
+ ***************************/
+
+// Body elements
+var dayEventsEl = document.querySelector("article.day-events");
+var navFormEl = document.getElementById("nav-form");
 
 // Search Form
 var locationEl = document.getElementById("locationSearch");
 var dateEl = document.getElementById("dateSearch");
-
-var apiKey = "5056fb3f5552cba986f4ea65f8eec72e";
-
-function getCordinates(city) {
-   var baseUrl = "http://api.openweathermap.org/geo/1.0/direct?q=";
-   var restUrl = "&limit=1&appid=5056fb3f5552cba986f4ea65f8eec72e";
-   //Make a request to the url
-   fetch(baseUrl + city + restUrl).then(function (response) {
-      //request was successful
-      response.json().then(function (data) {
-         console.log(data);
-         //displayCordinates(data)
-         getCurrent(data[0].lat, data[0].lon);
-         displayCityName(data[0].name, data[0].state);
-         getForecast(data[0].lat, data[0].lon);
-      });
-   });
-}
-//create a span element to hold searched city names
-//var titleEl = document.createElement("span");
-
-//titleEl.textContent = (cityName);
 
 //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 function getCurrent(lat, lon) {
@@ -63,33 +43,6 @@ function getForecast (data) {
    var today = moment();
    for (var i = 1; i<6; i++) 
       console.log(data[i]);
-}
-var currentContainer = document.querySelector(".day-events");
-function displayCurrent(data) {
-   var currentTemp = document.querySelector(".current-temp");
-   currentTemp.textContent = "Temperature: " + data.current.temp + "°F";
-   var currentHumid = document.querySelector(".current-humidity");
-   currentHumid.textContent = "Humidity: " + data.current.humidity + "%";
-   var currentWind = document.querySelector(".current-windspeed");
-   currentWind.textContent = "Windspeed: " + data.current.wind_speed + " MPH";
-   var currentUvi = document.querySelector(".current-uvi");
-   currentUvi.textContent = "Uvi: " + data.current.uvi;
-   currentContainer.appendChild(currentTemp);
-   currentContainer.appendChild(currentHumid);
-   currentContainer.appendChild(currentWind);
-   currentContainer.appendChild(currentUvi);
-}
-
-function displayCityName(city, state) {
-   var cityNameEl = document.querySelector(".cityname");
-   cityNameEl.textContent = city + ", " + state;
-}
-
-function displayDate() {
-   var date = moment().format("MMMM Do YYYY");
-   console.log(date);
-   var dateEl = document.querySelector(".date");
-   dateEl.textContent = date;
 }
 
 // Event class with methods for fetching and manipulating event information
@@ -169,6 +122,7 @@ async function getEvents(location, date, count = 3) {
    return e;
 }
 
+// Location class with methods for fetching and manipulating event information
 class Location {
    constructor(searchTerm) {
       this.search = searchTerm;
@@ -238,61 +192,6 @@ class Location {
    }
 }
 
-async function submitHandler(event) {
-   event.preventDefault();
-   // Remove existing '.day' elements
-   const dayEls = document.querySelectorAll('.day-events *');
-   dayEls.forEach(dayEl => {
-      dayEl.remove();
-   })
-   // Get geocoding data from PositionStack
-   var l = new Location(locationEl.value);
-   l.data = await l.requestGeoData();
-   l.bestMatch = l.findBestMatch();
-   console.log(l.bestMatch);
-
-   // Parse Date
-   var timezoneOffset = l.bestMatch.timezone_module.offset_string;
-   var d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
-   
-   // 3 days at a time
-   var day = d;
-   for (let i = 0; i < 3; i++) {
-      var dayNext = new Date(day);
-      dayNext.setDate(dayNext.getDate() + 1);
-
-      // Get Weather
-
-      // Get Events
-      var todaysEvents = await getEvents(l.bestMatch, day);
-      console.log(todaysEvents);
-
-      // Break if we don't find any events this day
-      if (todaysEvents.data.page.totalElements > 0) {
-         var eventCount = 3;
-         if (todaysEvents.data._embedded.events.length < eventCount) {
-            eventCount = todaysEvents.data._embedded.events.length;
-         }
-
-         for (let j = 0; j < eventCount; j++) {
-            var event = todaysEvents.data._embedded.events[j];
-            if (event) {
-               todaysEvents.eventGroup.push(event);
-            }
-            else {
-               break;
-            }
-         }
-      }
-      
-      console.log(todaysEvents.eventGroup);
-      createDay("test", debug_WeatherObj, todaysEvents.eventGroup);
-
-      // Increment day
-      day = dayNext;
-   }
-}
-
 // Test objects for createDay()
 const debug_WeatherObj = {
    high: 34,
@@ -322,7 +221,7 @@ const debug_EventsArr = [{
 // date: a string with the long date ex. "Thursday January 1, 1970"
 // weatherObj: an object containing at least high(float), low(float), 
 //    main(str), mainIconID(str)
-// eventsArr: an array of objects containing
+// eventsArr: an array of objects containing ticketmaster event objects
 function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
       day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
@@ -444,10 +343,65 @@ function createDay(date, weatherObj, eventsArr) {
 
    day.appendChild(events);
 
-   dayEvents.appendChild(day);
+   dayEventsEl.appendChild(day);
 }
 
-navForm.addEventListener("submit", submitHandler);
+async function submitHandler(event) {
+   event.preventDefault();
+   // Remove existing '.day' elements
+   const dayEls = document.querySelectorAll('.day-events *');
+   dayEls.forEach(dayEl => {
+      dayEl.remove();
+   })
+   // Get geocoding data from PositionStack
+   var l = new Location(locationEl.value);
+   l.data = await l.requestGeoData();
+   l.bestMatch = l.findBestMatch();
+   console.log(l.bestMatch);
+
+   // Parse Date
+   var timezoneOffset = l.bestMatch.timezone_module.offset_string;
+   var d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+   
+   // 3 days at a time
+   var day = d;
+   for (let i = 0; i < 3; i++) {
+      var dayNext = new Date(day);
+      dayNext.setDate(dayNext.getDate() + 1);
+
+      // Get Weather
+
+      // Get Events
+      var todaysEvents = await getEvents(l.bestMatch, day);
+      console.log(todaysEvents);
+
+      // Break if we don't find any events this day
+      if (todaysEvents.data.page.totalElements > 0) {
+         var eventCount = 3;
+         if (todaysEvents.data._embedded.events.length < eventCount) {
+            eventCount = todaysEvents.data._embedded.events.length;
+         }
+
+         for (let j = 0; j < eventCount; j++) {
+            var event = todaysEvents.data._embedded.events[j];
+            if (event) {
+               todaysEvents.eventGroup.push(event);
+            }
+            else {
+               break;
+            }
+         }
+      }
+      
+      console.log(todaysEvents.eventGroup);
+      createDay("test", debug_WeatherObj, todaysEvents.eventGroup);
+
+      // Increment day
+      day = dayNext;
+   }
+}
+
+navFormEl.addEventListener("submit", submitHandler);
 // displayDate()
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
