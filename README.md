@@ -25,6 +25,7 @@ attraction information on the page.
 - [TailwindCSS](https://tailwindcss.com/)
 - [Open Weather API](https://openweathermap.org/api/one-call-api)
 - [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
+- [positionstack](https://positionstack.com/)
 
 ## Contributors
 
