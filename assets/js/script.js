@@ -4,12 +4,10 @@ var ForecastContainer = document.querySelector(".weather-main");
 var dayEvents = document.querySelector("article.day-events");
 var navForm = document.getElementById("nav-form");
 
-// create an event listener
-searchBtn.addEventListener("click", function (event) {
-   event.preventDefault();
-   console.log(searchField.value);
-   getCordinates(searchField.value);
-});
+// Search Form
+var locationEl = document.getElementById("locationSearch");
+var dateEl = document.getElementById("dateSearch");
+
 var apiKey = "5056fb3f5552cba986f4ea65f8eec72e";
 
 function getCordinates(city) {
@@ -65,7 +63,7 @@ function getForecast(lat, lon) {
       var today = moment();
       for (var i = 1; i<6; i++) 
          console.log(data[i]);
-      
+   }
 var currentContainer = document.querySelector(".day-events");
 function displayCurrent(data) {
    var currentTemp = document.querySelector(".current-temp");
@@ -94,12 +92,69 @@ function displayDate() {
    dateEl.textContent = date;
 }
 
-function submitHandler(event) {
+class Location {
+   constructor(searchTerm) {
+      this.search = searchTerm;
+      this.key = keyRing.position_stack;
+   }
+
+   async requestGeoData(searchTerm = this.search, key = this.key) {
+
+      if (!searchTerm || !key) {
+   
+         !searchTerm ? console.error("No valid query string passed")
+            : console.error("No valid API key passed");
+      }
+   
+      const baseURL = "http://api.positionstack.com/v1/"
+      const param = "forward?access_key=" + key + "&query=" + searchTerm +
+            "&timezone_module=1" + "&output=json";
+      var requestURL = baseURL + param;
+      
+      try {
+         const response = await fetch(requestURL, {
+            method: 'GET'
+         });
+         const geoCodeData = await response.json();
+         // console.log(geoCodeData);
+         return geoCodeData;
+      }
+      catch (error) {
+         console.error(error);
+      }
+   }
+
+   findBestMatch(data = this.data) {
+      if (this.search.includes(" ")) {
+         var queryLastWord = this.search.split(" ").pop().toLowerCase();
+      }
+      else {
+         var queryLastWord = this.search;
+      }
+      
+      for (let i = 0; i < this.data.length; i++) {
+         if (data[i].name
+            .toLowerCase()
+               .includes(queryLastWord)
+         ) {
+            return data[i];
+         }
+      }
+   }
+}
+
+async function submitHandler(event) {
    event.preventDefault();
-   let locationEl = document.getElementById("locationSearch");
-   let dateEl = document.getElementById("dateSearch");
-   // var timezoneOffset = "-0500";
-   // let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+
+   // Get geocoding data from PositionStack
+   var locData = new Location();
+   locData.data = await locData.requestGeoData(locationEl.value);
+   console.log(locData.data);
+   // console.log(locData.findBestMatch());
+   // Parse Date
+   var timezoneOffset = "-0500";
+   let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
+   
    // console.dir(d);
 }
 
@@ -241,5 +296,10 @@ navForm.addEventListener("submit", submitHandler);
 // displayDate()
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-   }
+
+window.onload = () => {
+   var today = new Date();
+   today = today.toISOString().split("T")[0];
+   dateEl.value = today;
+   dateEl.setAttribute("min", today);
 }
