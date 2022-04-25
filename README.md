@@ -16,14 +16,30 @@ insight and plan ahead.
 
 ## APIs
 
-#### CSS
+## Languages
 
--  [TailwindCSS](https://tailwindcss.com/)
+- HTML
+- CSS
+- JavaScript
 
-#### Weather
+## Extensions
 
-- [OpenMeteo](https://open-meteo.com/en)
+[TailwindCSS](https://tailwindcss.com/)
+[Open Weather API](https://openweathermap.org/api/one-call-api)
+[Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
 
-#### Attractions
+## Screenshots
 
-- [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
+## Live Website
+
+[Live App]()
+
+
+## Contributors
+
+ Vue Lee
+ Abyou Geletu
+ Mayra Ibarra
+ Luna Roberge
+
+
