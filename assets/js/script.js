@@ -57,13 +57,13 @@ function getForecast(lat, lon) {
          //displayCordinates(data)
       });
    });
-
-   //for loop for five day forecast
-   function getForecast (data) {
-      var today = moment();
-      for (var i = 1; i<6; i++) 
-         console.log(data[i]);
-   }
+}
+//for loop for five day forecast
+function getForecast (data) {
+   var today = moment();
+   for (var i = 1; i<6; i++) 
+      console.log(data[i]);
+}
 var currentContainer = document.querySelector(".day-events");
 function displayCurrent(data) {
    var currentTemp = document.querySelector(".current-temp");
