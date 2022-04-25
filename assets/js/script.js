@@ -127,13 +127,6 @@ class Location {
    }
 
    findBestMatch(data = this.data) {
-      // Last word of search query to match against name
-      if (this.search.includes(" ")) {
-         var queryLastWord = this.search.split(" ").pop().toLowerCase();
-      }
-      else {
-         var queryLastWord = this.search;
-      }
 
       // Find best match with search query
       var bestMatch = null;
@@ -147,7 +140,7 @@ class Location {
          // name of location actually matches a word in search term
          if (current.name
             .toLowerCase()
-            .includes(queryLastWord)
+            .includes(this.search)
          ) {
             // prioritize US search
             if (current.country_code == "USA") {
@@ -176,12 +169,15 @@ async function submitHandler(event) {
    var l = new Location(locationEl.value);
    l.data = await l.requestGeoData();
    l.bestMatch = l.findBestMatch();
-   console.log(l.bestMatch.timezone_module.offset_string);
+   console.log(l.bestMatch);
+
    // Parse Date
-   var timezoneOffset = "-0500";
-   let d = new Date(dateEl.value + "T00:00:00" + l.bestMatch.timezone_module.offset_string);
+   var timezoneOffset = l.bestMatch.timezone_module.offset_string;
+   let d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
    
-   // console.dir(d);
+   for (let i = 0; i < 3; i++) {
+      // createDay()
+   }
 }
 
 // Test objects for createDay()
