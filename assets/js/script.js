@@ -212,22 +212,24 @@ const debug_EventsArr = [{
 // eventsArr: an array of objects containing
 function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
-   day.className = "day";
-
-   var dateHeader = document.createElement("h2");
-   dateHeader.className = "event-date";
-   dateHeader.textContent = date;
-   day.appendChild(dateHeader);
+      day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
 
    //
    //   WEATHER
    //
    var weather = document.createElement("div");
-   weather.className = "weather";
+      weather.className = ('weather', 'bg-gray-300', 'p-5');
+      day.appendChild(weather);
+
+   var dateHeader = document.createElement("h2");
+      dateHeader.className = ('event-date', 'pb-2', 'font-bold');
+      dateHeader.textContent = date;
+      weather.appendChild(dateHeader);
 
    // container for current condition icon and description
    var weatherMain = document.createElement("div");
-   weatherMain.className = "weather-main";
+      weatherMain.className = "weather-main";
+      // append child for this element is on line #225
 
    // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
@@ -266,8 +268,9 @@ function createDay(date, weatherObj, eventsArr) {
    //
    //   EVENTS
    //
-   var events = document.createElement("div");
-   events.className = "events";
+
+var events = document.createElement("div");
+   events.className = ('events', 'bg-slate-50', 'p-5');
 
    for (let i = 0; i < eventsArr.length; i++) {
       var event = document.createElement("div");
