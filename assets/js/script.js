@@ -10,41 +10,82 @@ var navFormEl = document.getElementById("nav-form");
 var locationEl = document.getElementById("locationSearch");
 var dateEl = document.getElementById("dateSearch");
 
-//https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-function getCurrent(lat, lon) {
-   var baseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
-   var getLatLon = "lat=" + lat + "&lon=" + lon;
-   var restUrl = "&units=imperial&exclude=minutely,hourly,daily,alerts&appid=";
-   fetch(baseUrl + getLatLon + restUrl + apiKey).then(function (response) {
-      //request was successful
-      response.json().then(function (data) {
-         console.log(data);
-         //displayCordinates(data)
-         displayCurrent(data);
-      });
-   });
+async function getForecasts(lat, lon) {
+   var w = new Weather(lat, lon);
+   w.data = await w.pullWeather();
+   w.sevenDaily = await w.data.daily;
+   w.setDaily(w.sevenDaily[1]);
+   return w;
 }
 
-function getForecast(lat, lon) {
-   var baseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
-   var getLatLon = "lat=" + lat + "&lon=" + lon;
-   var restUrl =
-      "&units=imperial&exclude=minutely,hourly,current,alerts&appid=";
-   fetch(baseUrl + getLatLon + restUrl + apiKey).then(function (response) {
-      //request was successful
-      response.json().then(function (data) {
-         console.log(data);
-         //displayCordinates(data)
-      });
-   });
-}
-//for loop for five day forecast
-function getForecast (data) {
-   var today = moment();
-   for (var i = 1; i<6; i++) 
-      console.log(data[i]);
-}
+class Weather {
+   constructor(lat, lon) {
+      this.lat = lat;
+      this.lon = lon;
+      this.data = {};
+      this.sevenDaily = [];
+      this.currentDaily = {};
+   }
 
+   async pullWeather(lat = this.lat, lon = this.lon) {
+      if (!lat || !lon) {
+         if (!lat) {
+            console.error("No valid latitude passed");
+         }
+         else {
+            console.error("No valid longitude passed");
+         }
+         return false;
+      }
+
+      const baseURL = "https://api.openweathermap.org/data/2.5/onecall"
+      const params = {
+         lat: "?lat=" + lat,
+         lon: "&lon=" + lon,
+         count: "&exclude=" + "current,minutely,hourly,alerts",
+         key: "&appid="
+      }
+
+      const requestURL = baseURL + params.lat + params.lon + 
+            params.count + params.key + keyRing.open_weather_map;
+
+      try {
+         const response = await fetch(requestURL, 
+         {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'same-origin'
+         });
+         const weatherData = await response.json();
+         return weatherData;
+      }
+      catch (error) {
+         console.error(error);
+      }
+   }
+
+   setDaily(weatherObj) {
+      this.currentDaily = {
+         main: weatherObj.weather[0].main,
+         low: this.toFahrenheit(weatherObj.temp.min),
+         high: this.toFahrenheit(weatherObj.temp.max),
+         mainIconID: weatherObj.weather[0].icon,
+         mainIconURL: "http://openweathermap.org/img/wn/" + 
+               weatherObj.weather[0].icon + "@2x.png"
+      }
+   }
+
+   toCelsius(k) {
+      let c = k - 273.15;
+      return Math.floor(c);
+   }
+
+   toFahrenheit(k) {
+      let c = this.toCelsius(k);
+      let f = (c * (9/5)) + 32;
+      return Math.floor(f);
+   }
+}
 // Event class with methods for fetching and manipulating event information
 class Event {
    constructor() {
@@ -79,13 +120,16 @@ class Event {
          return dateStr.toISOString().split(".")[0] + "Z";
       }
 
-      const param = "events?apikey=" + key + 
+      const params = "events?apikey=" + key + 
             "&latlong=" + location.latitude + 
             "," + location.longitude + 
             "&radius=30&unit=miles&locale=*&startDateTime=" + 
             toBetterISO(date) + "&endDateTime=" + toBetterISO(datePlus);
-      var requestURL = baseURL + param;
+
+      var requestURL = baseURL + params;
+
       console.log(requestURL);
+
       try {
          const response = await fetch(requestURL, 
          {
@@ -140,9 +184,9 @@ class Location {
       }
    
       const baseURL = "http://api.positionstack.com/v1/"
-      const param = "forward?access_key=" + key + "&query=" + searchTerm +
+      const params = "forward?access_key=" + key + "&query=" + searchTerm +
             "&timezone_module=1" + "&output=json";
-      var requestURL = baseURL + param;
+      var requestURL = baseURL + params;
       
       try {
          const response = await fetch(requestURL, {
@@ -224,11 +268,12 @@ const debug_EventsArr = [{
 // eventsArr: an array of objects containing ticketmaster event objects
 function createDay(date, weatherObj, eventsArr) {
    var day = document.createElement("section");
-      day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
+   day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
 
    //
    //   WEATHER
    //
+   
    var weather = document.createElement("div");
       weather.className = ('weather', 'bg-gray-300', 'p-5');
       day.appendChild(weather);
@@ -240,20 +285,18 @@ function createDay(date, weatherObj, eventsArr) {
 
    // container for current condition icon and description
    var weatherMain = document.createElement("div");
-      weatherMain.className = "weather-main";
-      // append child for this element is on line #225
+   weatherMain.className = "weather-main";
 
    // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
    weatherMainIcon.className = "weather-main-icon";
-   weatherMainIcon.setAttribute("src", weatherObj.mainIconURL);
-   //"https://openweathermap.org/img/wn/" + weatherObj.mainIconID + "@2x.png");
+   weatherMainIcon.setAttribute("src", weatherObj.currentDaily.mainIconURL);
    weatherMain.appendChild(weatherMainIcon);
 
-   // text: "Clear", "Cloudy", "Tstorms", etc
+   // text: "Clear", "Cloudy", etc
    var weatherMainText = document.createElement("p");
    weatherMainText.className = "weather-main-text";
-   weatherMainText.textContent = weatherObj.main;
+   weatherMainText.textContent = weatherObj.currentDaily.main;
    weatherMain.appendChild(weatherMainText);
 
    weather.appendChild(weatherMain);
@@ -264,12 +307,12 @@ function createDay(date, weatherObj, eventsArr) {
 
    var weatherHigh = document.createElement("p");
    weatherHigh.className = "weather-high";
-   weatherHigh.textContent = weatherObj.high;
+   weatherHigh.textContent = weatherObj.currentDaily.high;
    weatherTemp.appendChild(weatherHigh);
 
    var weatherLow = document.createElement("p");
    weatherLow.className = "weather-low";
-   weatherLow.textContent = weatherObj.low;
+   weatherLow.textContent = weatherObj.currentDaily.low;
    weatherTemp.appendChild(weatherLow);
    
    weather.appendChild(weatherTemp);
@@ -359,21 +402,25 @@ async function submitHandler(event) {
    l.bestMatch = l.findBestMatch();
    console.log(l.bestMatch);
 
-   // Parse Date
+   // Set timezone and create new Date object
    var timezoneOffset = l.bestMatch.timezone_module.offset_string;
    var d = new Date(dateEl.value + "T00:00:00" + timezoneOffset);
    
-   // 3 days at a time
+   var w = await getForecasts(l.bestMatch.latitude, l.bestMatch.longitude);
+   console.log(w);
+
+   // Create 3 '.day' sections
    var day = d;
+   var forecastAdvance = 0;
    for (let i = 0; i < 3; i++) {
       var dayNext = new Date(day);
       dayNext.setDate(dayNext.getDate() + 1);
 
       // Get Weather
+      w.setDaily(w.sevenDaily[forecastAdvance]);
 
       // Get Events
       var todaysEvents = await getEvents(l.bestMatch, day);
-      console.log(todaysEvents);
 
       // Break if we don't find any events this day
       if (todaysEvents.data.page.totalElements > 0) {
@@ -393,18 +440,15 @@ async function submitHandler(event) {
          }
       }
       
-      console.log(todaysEvents.eventGroup);
-      createDay("test", debug_WeatherObj, todaysEvents.eventGroup);
+      createDay(day, w, todaysEvents.eventGroup);
 
       // Increment day
       day = dayNext;
+      forecastAdvance = i + 1;
    }
 }
 
 navFormEl.addEventListener("submit", submitHandler);
-// displayDate()
-
-// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 window.onload = () => {
    var today = new Date();
