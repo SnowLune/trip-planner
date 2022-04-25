@@ -5,6 +5,7 @@
 // Body elements
 var dayEventsEl = document.querySelector("article.day-events");
 var navFormEl = document.getElementById("nav-form");
+var locationLabel = document.getElementById("location-label");
 
 // Search Form
 var locationEl = document.getElementById("locationSearch");
@@ -267,6 +268,9 @@ const debug_EventsArr = [{
 //    main(str), mainIconID(str)
 // eventsArr: an array of objects containing ticketmaster event objects
 function createDay(date, weatherObj, eventsArr) {
+   //
+   // Create .day section
+   //
    var day = document.createElement("section");
    day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
 
@@ -391,16 +395,21 @@ function createDay(date, weatherObj, eventsArr) {
 
 async function submitHandler(event) {
    event.preventDefault();
-   // Remove existing '.day' elements
+   // Remove existing '.day' elements and reset location-label
    const dayEls = document.querySelectorAll('.day-events *');
    dayEls.forEach(dayEl => {
       dayEl.remove();
    })
+   locationLabel.textContent = "";
+
    // Get geocoding data from PositionStack
    var l = new Location(locationEl.value);
    l.data = await l.requestGeoData();
    l.bestMatch = l.findBestMatch();
    console.log(l.bestMatch);
+
+   // Set location-label to our bestMatch location
+   locationLabel.textContent = l.bestMatch.label;
 
    // Set timezone and create new Date object
    var timezoneOffset = l.bestMatch.timezone_module.offset_string;
