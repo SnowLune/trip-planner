@@ -272,18 +272,18 @@ function createDay(date, weatherObj, eventsArr) {
    // Create .day section
    //
    var day = document.createElement("section");
-   day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
+   day.className = 'day flex justify-center bg-gray-200 m-8 p-5';
 
    //
    //   WEATHER
    //
    
    var weather = document.createElement("div");
-      weather.className = ('weather', 'bg-gray-300', 'p-5');
+      weather.className = 'weather bg-gray-300 p-5';
       day.appendChild(weather);
 
    var dateHeader = document.createElement("h2");
-      dateHeader.className = ('event-date', 'pb-2', 'font-bold');
+      dateHeader.className = 'event-date pb-2 font-bold';
       dateHeader.textContent = date;
       weather.appendChild(dateHeader);
 
@@ -328,7 +328,7 @@ function createDay(date, weatherObj, eventsArr) {
    //   EVENTS
    //
    var events = document.createElement("div");
-     events.className = ('events', 'bg-slate-50', 'p-5');
+     events.className = 'events bg-slate-50 p-5';
 
    for (let i = 0; i < eventsArr.length; i++) {
       var e = {
