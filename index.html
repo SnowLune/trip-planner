@@ -15,19 +15,19 @@
 
 
    <body class="bg-gray-100 h-full">
-      <header class="p-5 flex flex-col sticky top-0 bg-gray-400">
-         <h6>
+      <header class="p-5 flex flex-col sticky top-0 bg-indigo-600">
+         <h6 class="text-slate-50 text-center text-5xl p-10">
             <a href="/">Trip Planner</a>
          </h6>
          <nav class="flex justify-around">
             <form id="nav-form" class="flex justify-between">
                <div class="location px-2">
-                  <label for="location">Where are you going:</label>
-                  <input type="search" id="locationSearch" name="location" class="rounded-full px-3" required />
+                  <label for="location" class= "text-slate-50 text-xl">Where are you going:</label>
+                  <input type="search" id="locationSearch" name="location" class="rounded-full px-3" placeholder="City, State" required />
                </div>
                <div class="date px-2 pr-5">
-                  <label for="date">Date:</label>
-                  <input type="date" id="dateSearch" name="date" class="rounded-full px-3" required />
+                  <label for="date" class="text-slate-50 text-xl">Date:</label>
+                  <input type="date" id="dateSearch" name="date" class="rounded-full px-3 text-slate-500" required />
                </div>
                <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md" type="submit">Find Events</button>
             </form>
@@ -40,7 +40,7 @@
 
 
       <main class="max-w-7xl bg-gray-300 m-auto h-full flex flex-col" id="main-content">
-         <h1 class="text-2xl flex justify-center" id="location-label"></h1>
+         <h1 class="text-3xl font-bold flex justify-center pt-6" id="location-label"></h1>
          <article class="day-events flex-1">
             <!-- dynamically generated section -->
             <!-- <section class="day flex justify-center bg-gray-200 m-8 p-5">

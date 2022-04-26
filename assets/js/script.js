@@ -272,7 +272,7 @@ function createDay(date, weatherObj, eventsArr) {
    // Create .day section
    //
    var day = document.createElement("section");
-   day.className = 'day flex justify-center bg-gray-200 m-8 p-5';
+   day.className = 'day flex justify-evenly bg-gray-200 m-8 p-5';
 
    //
    //   WEATHER
@@ -293,13 +293,13 @@ function createDay(date, weatherObj, eventsArr) {
 
    // the OpenWeatherMap icon associated with the weather.main id
    var weatherMainIcon = document.createElement("img");
-   weatherMainIcon.className = "weather-main-icon";
+   weatherMainIcon.className = "weather-main-icon m-auto pt-20";
    weatherMainIcon.setAttribute("src", weatherObj.currentDaily.mainIconURL);
    weatherMain.appendChild(weatherMainIcon);
 
    // text: "Clear", "Cloudy", etc
    var weatherMainText = document.createElement("h4");
-   weatherMainText.className = "weather-main-text";
+   weatherMainText.className = "weather-main-text text-3xl text-center";
    weatherMainText.textContent = weatherObj.currentDaily.main;
    weatherMain.appendChild(weatherMainText);
 
@@ -310,12 +310,12 @@ function createDay(date, weatherObj, eventsArr) {
    weatherTemp.className = "weather-temp";
 
    var weatherHigh = document.createElement("h5");
-   weatherHigh.className = "weather-high";
+   weatherHigh.className = "weather-high text-2xl text-center";
    weatherHigh.textContent = "High: " +weatherObj.currentDaily.high;
    weatherTemp.appendChild(weatherHigh);
 
    var weatherLow = document.createElement("h5");
-   weatherLow.className = "weather-low";
+   weatherLow.className = "weather-low text-2xl text-center";
    weatherLow.textContent = "Low: " +weatherObj.currentDaily.low;
    weatherTemp.appendChild(weatherLow);
    

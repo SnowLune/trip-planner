@@ -36,7 +36,7 @@ attraction information on the page.
 
 ## Screenshots
 
-![image](./assets/images/previewwa.png)
+![image](./assets/images/Project1.png)
 
 ## Live Website
 
