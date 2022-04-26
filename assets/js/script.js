@@ -298,7 +298,7 @@ function createDay(date, weatherObj, eventsArr) {
    weatherMain.appendChild(weatherMainIcon);
 
    // text: "Clear", "Cloudy", etc
-   var weatherMainText = document.createElement("p");
+   var weatherMainText = document.createElement("h4");
    weatherMainText.className = "weather-main-text";
    weatherMainText.textContent = weatherObj.currentDaily.main;
    weatherMain.appendChild(weatherMainText);
@@ -309,14 +309,14 @@ function createDay(date, weatherObj, eventsArr) {
    var weatherTemp = document.createElement("div");
    weatherTemp.className = "weather-temp";
 
-   var weatherHigh = document.createElement("p");
+   var weatherHigh = document.createElement("h5");
    weatherHigh.className = "weather-high";
-   weatherHigh.textContent = weatherObj.currentDaily.high;
+   weatherHigh.textContent = "High: " +weatherObj.currentDaily.high;
    weatherTemp.appendChild(weatherHigh);
 
-   var weatherLow = document.createElement("p");
+   var weatherLow = document.createElement("h5");
    weatherLow.className = "weather-low";
-   weatherLow.textContent = weatherObj.currentDaily.low;
+   weatherLow.textContent = "Low: " +weatherObj.currentDaily.low;
    weatherTemp.appendChild(weatherLow);
    
    weather.appendChild(weatherTemp);
@@ -328,7 +328,7 @@ function createDay(date, weatherObj, eventsArr) {
    //   EVENTS
    //
    var events = document.createElement("div");
-   events.className = ('events', 'bg-slate-50', 'p-5');
+     events.className = ('events', 'bg-slate-50', 'p-5');
 
    for (let i = 0; i < eventsArr.length; i++) {
       var e = {
