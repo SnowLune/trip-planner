@@ -50,31 +50,6 @@
     </header>
 
 
-<!-- 
-      <header class="p-5 flex flex-col sticky top-0 bg-gray-400">
-         <h6>
-            <a href="/">Trip Planner</a>
-         </h6>
-         <nav class="flex justify-around">
-            <form id="nav-form" class="flex justify-between">
-               <div class="location px-2">
-                  <label for="location">Where are you going:</label>
-                  <input type="search" id="locationSearch" name="location" class="rounded-full px-3" required />
-               </div>
-               <div class="date px-2 pr-5">
-                  <label for="date">Date:</label>
-                  <input type="date" id="dateSearch" name="date" class="rounded-full px-3" required />
-               </div>
-               <button id="findEventBtn" class="px-3 bg-slate-50 hover:bg-sky-500 focus:ring rounded-md" type="submit">Find Events</button>
-            </form>
-            <div>
-               <a href="#about" class="px-2 hover:text-white">About</a>
-               <a href="" class="px-2 hover:text-white">GitHub</a>
-            </div>
-         </nav>
-      </header> -->
-
-
       <main class="max-w-7xl bg-gray-300 m-auto h-full flex" id="main-content">
          <h1 class="text-2xl" id="location-label"></h1>
          <article class="day-events flex-1">
@@ -117,7 +92,93 @@
          </article>
 
       </main>
-      <footer></footer>
+
+  
+      <footer
+        class="text-gray-600 body-font text-gray-400 body-font- text-center bg-slate-600"
+      >
+        <div
+          class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+        >
+          <a
+            class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+          >
+            <!-- Add logo -->
+            <span class="ml-3 text-xl">Trip Planner</span>
+          </a>
+          <p
+            class="text-sm text-black sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-black sm:py-2 sm:mt-0 mt-4"
+          >
+            © 2020 Trip Planner
+          </p>
+          <span
+            class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+          >
+            <a class="text-gray-500">
+              <svg
+                fill="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"
+                ></path>
+              </svg>
+            </a>
+            <a class="ml-3 text-gray-500">
+              <svg
+                fill="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+                ></path>
+              </svg>
+            </a>
+            <a class="ml-3 text-gray-500">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"
+                ></path>
+              </svg>
+            </a>
+            <a class="ml-3 text-gray-500">
+              <svg
+                fill="currentColor"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="0"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="none"
+                  d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+                ></path>
+                <circle cx="4" cy="4" r="2" stroke="none"></circle>
+              </svg>
+            </a>
+          </span>
+        </div>
+      </footer>
+  
       
       <script src="./assets/js/key.js"></script>
       <script src="./assets/js/script.js"></script>
