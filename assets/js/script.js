@@ -272,14 +272,14 @@ function createDay(date, weatherObj, eventsArr) {
    // Create .day section
    //
    var day = document.createElement("section");
-   day.className = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
+   day.classList.add = ('day', 'flex', 'justify-center', 'bg-gray-200', 'm-8', 'p-5');
 
    //
    //   WEATHER
    //
    
    var weather = document.createElement("div");
-      weather.className = ('weather', 'bg-gray-300', 'p-5');
+      weather.classList.add = ('weather', 'bg-gray-300', 'p-5');
       day.appendChild(weather);
 
    var dateHeader = document.createElement("h2");
@@ -328,7 +328,7 @@ function createDay(date, weatherObj, eventsArr) {
    //   EVENTS
    //
    var events = document.createElement("div");
-     events.className = ('events', 'bg-slate-50', 'p-5');
+     events.classList.add = ('events', 'bg-slate-50', 'p-5', 'flex-1', 'justify-between');
 
    for (let i = 0; i < eventsArr.length; i++) {
       var e = {
@@ -421,7 +421,7 @@ async function submitHandler(event) {
    // Create 3 '.day' sections
    var day = d;
    var forecastAdvance = 0;
-   for (let i = 0; i < 3; i++) {
+   //for (let i = 0; i < 3; i++) {
       var dayNext = new Date(day);
       dayNext.setDate(dayNext.getDate() + 1);
 
@@ -454,7 +454,7 @@ async function submitHandler(event) {
       // Increment day
       day = dayNext;
       forecastAdvance = i + 1;
-   }
+   //}
 }
 
 navFormEl.addEventListener("submit", submitHandler);
