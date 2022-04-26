@@ -45,8 +45,6 @@
     overflow: scroll;
   }
   
- 
-  
   /* Applying media query to create different layouts depending on the size of the viewport make */
   @media screen and (max-width: 1000px) {
     
