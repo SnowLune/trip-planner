@@ -290,7 +290,7 @@ function createDay(date, weatherObj, eventsArr) {
 
   var dateHeader = document.createElement("h2");
   dateHeader.className = "event-date pb-2 font-bold";
-  dateHeader.textContent = date;
+  dateHeader.textContent = date.toDateString();
   weather.appendChild(dateHeader);
 
   // container for current condition icon and description
