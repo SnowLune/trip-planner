@@ -364,7 +364,7 @@ function createDay(date, weatherObj, eventsArr) {
 
     // container for event time and event venue
     var eventTimeVenue = document.createElement("p");
-    eventTimeVenue.className = "event-time-and-venue";
+    eventTimeVenue.className = "event-time-and-venue flex flex-col";
     // event time
     var eventTime = document.createElement("span");
     eventTime.className = "event-time";
