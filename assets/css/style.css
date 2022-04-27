@@ -53,13 +53,13 @@
 }
 
 .weather-main {
-  background-color: rgba(142, 143, 142, .0);
-  border-radius: 50%;
+  background-color: rgba(142, 143, 142, .3);
+border-radius: 10px;
 
 }
 .weather-main-text,
 .weather-temp {
-  background-color: rgba(142, 143, 142, 0);
+  background-color: rgba(142, 143, 142, .3);
 }
 .weather-temp {
   border-bottom-left-radius: 10px;
