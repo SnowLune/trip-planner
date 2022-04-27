@@ -299,13 +299,14 @@ function createDay(date, weatherObj, eventsArr) {
 
   // the OpenWeatherMap icon associated with the weather.main id
   var weatherMainIcon = document.createElement("img");
-  weatherMainIcon.className = "weather-main-icon m-auto pt-2";
+  weatherMainIcon.className = "weather-main-icon m-auto pt-2 text-white";
   weatherMainIcon.setAttribute("src", weatherObj.currentDaily.mainIconURL);
   weatherMain.appendChild(weatherMainIcon);
 
   // text: "Clear", "Cloudy", etc
   var weatherMainText = document.createElement("h4");
-  weatherMainText.className = "weather-main-text text-3xl text-center";
+  weatherMainText.className =
+    "weather-main-text text-3xl text-center text-white";
   weatherMainText.textContent = weatherObj.currentDaily.main;
   weatherMain.appendChild(weatherMainText);
 
@@ -313,7 +314,7 @@ function createDay(date, weatherObj, eventsArr) {
 
   // container for high and low temps
   var weatherTemp = document.createElement("div");
-  weatherTemp.className = "weather-temp";
+  weatherTemp.className = "weather-temp text-white";
 
   var weatherHigh = document.createElement("h5");
   weatherHigh.className = "weather-high text-2xl text-center";
